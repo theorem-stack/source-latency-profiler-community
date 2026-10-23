@@ -1,0 +1,50 @@
+[
+  {
+    "event_id": "cpi_2026-07",
+    "release_at_et": "2026-07-14T08:30:00-04:00",
+    "discover_key": "2026-07",
+    "event_overrides": {
+      "release_month": "2026-07"
+    }
+  },
+  {
+    "event_id": "cpi_2026-08",
+    "release_at_et": "2026-08-12T08:30:00-04:00",
+    "discover_key": "2026-08",
+    "event_overrides": {
+      "release_month": "2026-08"
+    }
+  },
+  {
+    "event_id": "cpi_2026-09",
+    "release_at_et": "2026-09-10T08:30:00-04:00",
+    "discover_key": "2026-09",
+    "event_overrides": {
+      "release_month": "2026-09"
+    }
+  },
+  {
+    "event_id": "cpi_2026-10",
+    "release_at_et": "2026-10-13T08:30:00-04:00",
+    "discover_key": "2026-10",
+    "event_overrides": {
+      "release_month": "2026-10"
+    }
+  },
+  {
+    "event_id": "cpi_2026-11",
+    "release_at_et": "2026-11-12T08:30:00-04:00",
+    "discover_key": "2026-11",
+    "event_overrides": {
+      "release_month": "2026-11"
+    }
+  },
+  {
+    "event_id": "cpi_2026-12",
+    "release_at_et": "2026-12-10T08:30:00-04:00",
+    "discover_key": "2026-12",
+    "event_overrides": {
+      "release_month": "2026-12"
+    }
+  }
+]

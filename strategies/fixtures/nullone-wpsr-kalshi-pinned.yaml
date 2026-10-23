@@ -1,0 +1,105 @@
+schema_version: 1
+
+strategy:
+  name: nullone_wpsr_kalshi
+  description: Pinned crude oil markets fixture for offline tests.
+  event_id: eia_wpsr_2026-06-06
+  release_at_et: "2026-06-11T10:30:00-04:00"
+  event_time: "2026-06-11T10:30:00-04:00"
+  mode: paper
+
+event:
+  source: eia_wpsr
+  week_ending: "2026-06-06"
+  metric: crude_change_mbbl
+  region: us
+
+markets:
+  source: pinned
+  brackets:
+    - label: "-3 to -1"
+      min: -3
+      max: -1
+      kalshi:
+        market_ticker: "KXCRUDEOIL-JUN11-NEG2"
+    - label: "-1 to 1"
+      min: -1
+      max: 1
+      kalshi:
+        market_ticker: "KXCRUDEOIL-JUN11-ZERO"
+    - label: "1 to 3"
+      min: 1
+      max: 3
+      kalshi:
+        market_ticker: "KXCRUDEOIL-JUN11-POS2"
+
+execution:
+  min_edge_after_fees: 0.05
+  max_entry_price: 0.92
+  release_capital_usd: 100
+  execution_strategy: auto
+  mode: paper
+
+targets:
+  sources:
+    - name: eia_wpsr_json
+      type: http
+      url: https://ir.eia.gov/petroleum/supply/weekly/eia_pet_s_wpsbc_a_epoo_sas_mbbld_w.htm
+      expected_status: 200
+      timeout_ms: 2000
+  venues:
+    - name: kalshi_status
+      type: http
+      url: https://external-api.kalshi.com/trade-api/v2/exchange/status
+      expected_status: 200
+      timeout_ms: 2000
+    - name: kalshi_ws
+      type: websocket
+      url: wss://external-api-ws.kalshi.com/trade-api/ws/v2
+      timeout_ms: 3000
+
+candidate_locations:
+  aws:
+    regions:
+      - us-east-1
+    instance_types:
+      - c7i.large
+
+objective:
+  weights:
+    source_ttfb_p50: 0.25
+    source_ttfb_p95: 0.20
+    venue_total_p50: 0.20
+    venue_total_p95: 0.20
+    jitter: 0.10
+    failure_rate: 0.05
+  minimum_samples: 100
+  minimum_confidence: 0.85
+  minimum_score_margin_pct: 15
+  lookback: 10m
+
+automation:
+  allow_auto_deploy: true
+  warmup_starts_at: "T-30m"
+  profiler_stops_at: "T-2m"
+  latest_deploy_cutoff: "T-3m"
+  execution_starts_at: "T+0"
+  auto_teardown: true
+  fallback:
+    mode: deploy_default_region
+    provider: aws
+    region: us-east-1
+
+deployment:
+  runtime: ec2
+  engine: nullone
+  artifact:
+    type: container
+    image: "123456789012.dkr.ecr.us-east-1.amazonaws.com/nullone:wngsr-smoke-001"
+  startup_command: "nullone ready --config /etc/nullone/runtime.json"
+  execution_command: "nullone execute --config /etc/nullone/runtime.json"
+  secrets:
+    source: aws_secrets_manager
+    names:
+      - nullone/prod/runtime/env
+      - nullone/prod/kalshi/private_key_pem

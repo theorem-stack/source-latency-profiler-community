@@ -1,0 +1,14 @@
+[Unit]
+Description=Source Latency Profiler daily hot-path diagnostic execute
+After=network-online.target
+
+[Service]
+Type=oneshot
+TimeoutStartSec=0
+WorkingDirectory=/opt/source-latency-profiler
+Environment=AWS_REGION=us-east-1
+Environment=RESULTS_BUCKET=source-latency-profiler-results-CHANGE_ME
+ExecStart=/bin/bash -lc 'RUN_ID="scheduled-diagnostic-$(date -u +%Y%m%d%H%M%S)" && exec /opt/source-latency-profiler/.venv/bin/python -m profiler.cli strategy execute --strategy strategies/nullone-wngsr-kalshi-sandbox.yaml --run-id "$RUN_ID" --secrets-prefix nullone/prod --results-s3-prefix s3://${RESULTS_BUCKET}/profiler --runtime-s3-prefix s3://${RESULTS_BUCKET}/runtime --diagnostics hot-path --diagnostics-s3-prefix s3://${RESULTS_BUCKET}/diagnostics --apply --teardown-mode after-execution --execution-timeout-seconds 180 --execution-handoff host-timer --execution-lead-seconds 30 --samples 1'
+
+[Install]
+WantedBy=multi-user.target

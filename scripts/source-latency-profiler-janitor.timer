@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Source Latency Profiler strategy runtime janitor
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

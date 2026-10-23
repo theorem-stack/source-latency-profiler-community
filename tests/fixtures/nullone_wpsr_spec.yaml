@@ -1,0 +1,28 @@
+event_id: eia_wpsr_2026-06-06
+week_ending: "2026-06-06"
+release_at_et: "2026-06-11T10:30:00"
+metric: crude_change_mbbl
+region: us
+kalshi_event_ticker: KXCRUDEOIL-JUN11
+brackets:
+  - label: "-3 to -1"
+    min: -3
+    max: -1
+    kalshi:
+      market_ticker: "KXCRUDEOIL-JUN11-NEG2"
+  - label: "-1 to 1"
+    min: -1
+    max: 1
+    kalshi:
+      market_ticker: "KXCRUDEOIL-JUN11-ZERO"
+  - label: "1 to 3"
+    min: 1
+    max: 3
+    kalshi:
+      market_ticker: "KXCRUDEOIL-JUN11-POS2"
+execution:
+  min_edge_after_fees: 0.05
+  max_entry_price: 0.92
+  release_capital_usd: 100
+  execution_strategy: auto
+  mode: paper

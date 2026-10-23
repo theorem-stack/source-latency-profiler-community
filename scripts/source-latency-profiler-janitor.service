@@ -1,0 +1,9 @@
+[Unit]
+Description=Source Latency Profiler strategy runtime janitor
+
+[Service]
+Type=oneshot
+TimeoutStartSec=0
+WorkingDirectory=/opt/source-latency-profiler
+Environment=AWS_REGION=us-east-1
+ExecStart=/opt/source-latency-profiler/.venv/bin/python -m profiler.cli strategy janitor --region ${AWS_REGION} --app-dir /opt/source-latency-profiler --yes

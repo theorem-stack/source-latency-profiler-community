@@ -1,0 +1,7 @@
+targets:
+  - name: example_http
+    type: http
+    url: https://example.com/
+    method: GET
+    expected_status: 200
+    timeout_ms: 2000

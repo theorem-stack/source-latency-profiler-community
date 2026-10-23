@@ -1,0 +1,28 @@
+event_id: eia_wngsr_2026-05-15
+week_ending: "2026-05-15"
+release_at_et: "2026-05-22T10:30:00"
+metric: net_change_bcf
+region: lower48
+kalshi_event_ticker: KXGASSTORAGE-MAY15
+brackets:
+  - label: "96-100"
+    min: 96
+    max: 100
+    kalshi:
+      market_ticker: "KXGASSTORAGE-MAY15-98"
+  - label: "101-105"
+    min: 101
+    max: 105
+    kalshi:
+      market_ticker: "KXGASSTORAGE-MAY15-103"
+  - label: "106-110"
+    min: 106
+    max: 110
+    kalshi:
+      market_ticker: "KXGASSTORAGE-MAY15-108"
+execution:
+  min_edge_after_fees: 0.05
+  max_entry_price: 0.92
+  release_capital_usd: 100
+  execution_strategy: auto
+  mode: paper

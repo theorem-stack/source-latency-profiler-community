@@ -1,0 +1,110 @@
+schema_version: 1
+
+strategy:
+  name: nullone_wngsr_kalshi
+  description: Pinned markets fixture for offline tests.
+  event_id: eia_wngsr_2026-05-15
+  release_at_et: "2026-05-22T10:30:00-04:00"
+  event_time: "2026-05-22T10:30:00-04:00"
+  mode: paper
+
+event:
+  source: eia_wngsr
+  week_ending: "2026-05-15"
+  metric: net_change_bcf
+  region: lower48
+
+markets:
+  source: pinned
+  brackets:
+    - label: "96-100"
+      min: 96
+      max: 100
+      kalshi:
+        market_ticker: "KXGASSTORAGE-MAY15-98"
+    - label: "101-105"
+      min: 101
+      max: 105
+      kalshi:
+        market_ticker: "KXGASSTORAGE-MAY15-103"
+    - label: "106-110"
+      min: 106
+      max: 110
+      kalshi:
+        market_ticker: "KXGASSTORAGE-MAY15-108"
+
+execution:
+  min_edge_after_fees: 0.05
+  max_entry_price: 0.92
+  release_capital_usd: 100
+  execution_strategy: auto
+  mode: paper
+
+targets:
+  sources:
+    - name: eia_wngsr_json
+      type: http
+      url: https://ir.eia.gov/ngs/wngsr.json
+      expected_status: 200
+      timeout_ms: 2000
+    - name: eia_wngsr_csv
+      type: http
+      url: https://ir.eia.gov/ngs/wngsr.csv
+      expected_status: 200
+      timeout_ms: 2000
+  venues:
+    - name: kalshi_status
+      type: http
+      url: https://external-api.kalshi.com/trade-api/v2/exchange/status
+      expected_status: 200
+      timeout_ms: 2000
+    - name: kalshi_ws
+      type: websocket
+      url: wss://external-api-ws.kalshi.com/trade-api/ws/v2
+      timeout_ms: 3000
+
+candidate_locations:
+  aws:
+    regions:
+      - us-east-1
+    instance_types:
+      - c7i.large
+
+objective:
+  weights:
+    source_ttfb_p50: 0.25
+    source_ttfb_p95: 0.20
+    venue_total_p50: 0.20
+    venue_total_p95: 0.20
+    jitter: 0.10
+    failure_rate: 0.05
+  minimum_samples: 100
+  minimum_confidence: 0.85
+  minimum_score_margin_pct: 15
+  lookback: 10m
+
+automation:
+  allow_auto_deploy: true
+  warmup_starts_at: "T-30m"
+  profiler_stops_at: "T-2m"
+  latest_deploy_cutoff: "T-3m"
+  execution_starts_at: "T+0"
+  auto_teardown: true
+  fallback:
+    mode: deploy_default_region
+    provider: aws
+    region: us-east-1
+
+deployment:
+  runtime: ec2
+  engine: nullone
+  artifact:
+    type: container
+    image: "123456789012.dkr.ecr.us-east-1.amazonaws.com/nullone:wngsr-smoke-001"
+  startup_command: "nullone ready --config /etc/nullone/runtime.json"
+  execution_command: "nullone execute --config /etc/nullone/runtime.json"
+  secrets:
+    source: aws_secrets_manager
+    names:
+      - nullone/prod/runtime/env
+      - nullone/prod/kalshi/private_key_pem

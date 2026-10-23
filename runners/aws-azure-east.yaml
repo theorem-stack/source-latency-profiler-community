@@ -1,0 +1,20 @@
+runners:
+  - provider: aws
+    region: us-east-1
+    runtime: vm
+    runner_id: aws-us-east-1
+
+  - provider: aws
+    region: us-east-2
+    runtime: vm
+    runner_id: aws-us-east-2
+
+  - provider: azure
+    region: eastus
+    runtime: vm
+    runner_id: azure-eastus
+
+  - provider: azure
+    region: eastus2
+    runtime: vm
+    runner_id: azure-eastus2

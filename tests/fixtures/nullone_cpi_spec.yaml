@@ -1,0 +1,27 @@
+event_id: cpi_2026-07
+release_month: "2026-07"
+release_at_et: "2026-07-14T08:30:00"
+metric: cpi_yoy_pct
+kalshi_event_ticker: KXCPI-JUL14
+brackets:
+  - label: "2.8-3.0"
+    min: 2.8
+    max: 3.0
+    kalshi:
+      market_ticker: "KXCPI-JUL14-2p9"
+  - label: "3.0-3.2"
+    min: 3.0
+    max: 3.2
+    kalshi:
+      market_ticker: "KXCPI-JUL14-3p1"
+  - label: "3.2-3.4"
+    min: 3.2
+    max: 3.4
+    kalshi:
+      market_ticker: "KXCPI-JUL14-3p3"
+execution:
+  min_edge_after_fees: 0.05
+  max_entry_price: 0.92
+  release_capital_usd: 100
+  execution_strategy: auto
+  mode: paper

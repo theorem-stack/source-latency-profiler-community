@@ -1,0 +1,10 @@
+[Unit]
+Description=Run hot-path diagnostic execute once per day
+
+[Timer]
+OnCalendar=*-*-* 14:00:00 UTC
+Unit=source-latency-profiler-diagnostic.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

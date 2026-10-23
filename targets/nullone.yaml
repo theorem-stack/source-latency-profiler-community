@@ -1,0 +1,26 @@
+targets:
+  - name: eia_wngsr_json
+    type: http
+    url: https://ir.eia.gov/ngs/wngsr.json
+    method: GET
+    expected_status: 200
+    timeout_ms: 2000
+
+  - name: eia_wngsr_csv
+    type: http
+    url: https://ir.eia.gov/ngs/wngsr.csv
+    method: GET
+    expected_status: 200
+    timeout_ms: 2000
+
+  - name: kalshi_status
+    type: http
+    url: https://external-api.kalshi.com/trade-api/v2/exchange/status
+    method: GET
+    expected_status: 200
+    timeout_ms: 2000
+
+  - name: kalshi_ws
+    type: websocket
+    url: wss://external-api-ws.kalshi.com/trade-api/ws/v2
+    timeout_ms: 3000
