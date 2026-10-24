@@ -1,3 +1,5 @@
 # GCP Infrastructure
 
-GCP runner infrastructure is planned after the AWS and Azure runner abstractions stabilize.
+This directory is a placeholder. It has no Terraform, OpenTofu, or runner code, and nothing here can be applied.
+
+GCP runner infrastructure is not implemented. The AWS module in `infra/aws` is the only infrastructure in this tree that can be applied.

@@ -1,3 +1,5 @@
 # Azure Infrastructure
 
-Azure runner infrastructure is planned for the multi-cloud phase. The AWS module establishes the initial runner and persistent result-bucket pattern.
+This directory is a placeholder. It has no Terraform, OpenTofu, or runner code, and nothing here can be applied.
+
+Azure runner infrastructure is planned for a later multi-cloud phase. The AWS module in `infra/aws` is the only infrastructure in this tree that can be applied.
